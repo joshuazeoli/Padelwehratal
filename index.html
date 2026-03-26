@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Cube – Padelarena Wehratal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #06042e; color: #e2eaf4; line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    :root {
+      --brand-blue:   #1500cc;
+      --dark-bg:      #06042e;
+      --card-bg:      #0c0960;
+      --cyan:         #00b8e0;
+      --cyan-light:   #5cd8f4;
+      --white:        #ffffff;
+      --text-muted:   #7a9cbf;
+      --border:       rgba(0,184,224,0.2);
+      --border-strong:rgba(0,184,224,0.4);
+      --radius:       16px;
+    }
+
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 96px 0; }
+    .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cyan); margin-bottom: 12px; }
+    .section-title { font-size: clamp(1.8rem, 4vw, 2.75rem); font-weight: 800; line-height: 1.15; color: var(--white); margin-bottom: 20px; }
+    .section-sub { font-size: 1.05rem; color: var(--text-muted); max-width: 600px; margin-bottom: 52px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; border-radius: 50px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all .25s; border: none; }
+    .btn-primary { background: var(--cyan); color: #001a26; box-shadow: 0 8px 32px rgba(0,184,224,0.35); }
+    .btn-primary:hover { background: var(--cyan-light); transform: translateY(-2px); box-shadow: 0 14px 40px rgba(0,184,224,0.5); }
+    .btn-outline { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.35); }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: var(--white); transform: translateY(-2px); }
+
+    /* ── LANGUAGE SWITCHER ── */
+    .lang-switcher { display: flex; gap: 4px; align-items: center; }
+    .lang-btn {
+      background: transparent; border: 1px solid rgba(0,184,224,0.25);
+      color: var(--text-muted); padding: 4px 8px; border-radius: 6px;
+      font-size: 0.72rem; font-weight: 700; cursor: pointer;
+      transition: all .2s; font-family: inherit; letter-spacing: 0.05em;
+    }
+    .lang-btn:hover { border-color: var(--cyan); color: var(--white); }
+    .lang-btn.active { background: var(--cyan); border-color: var(--cyan); color: #001a26; }
+
+    /* ── NAVIGATION ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 80px; overflow: visible;
+      background: rgba(6,4,46,0.92); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border); transition: box-shadow .3s;
+    }
+    .nav-inner { display: flex; align-items: center; height: 80px; gap: 0; }
+    .nav-logo { display: flex; align-items: flex-start; flex-shrink: 0; }
+    .nav-logo img { height: 160px; width: auto; border-radius: 8px; position: relative; z-index: 101; }
+    .nav-links { display: flex; gap: 20px; list-style: none; align-items: center; flex: 1; justify-content: center; }
+    .nav-links a { font-size: 0.88rem; font-weight: 600; color: var(--text-muted); transition: color .2s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; margin-left: auto; }
+    .nav-cta { background: var(--cyan); color: #001a26; padding: 10px 22px; border-radius: 50px; font-size: 0.88rem; font-weight: 700; transition: all .25s; box-shadow: 0 4px 18px rgba(0,184,224,0.3); }
+    .nav-cta:hover { background: var(--cyan-light); transform: translateY(-1px); }
+    .nav-hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 110; }
+    .nav-hamburger span { display: block; width: 28px; height: 2.5px; background: var(--white); border-radius: 2px; transition: all 0.3s; }
+    .nav-hamburger.active span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+    .nav-hamburger.active span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.active span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+
+    /* ── MOBILE MENU ── */
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; z-index: 105;
+      background: rgba(6,4,46,0.98); backdrop-filter: blur(20px);
+      flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    }
+    .mobile-menu.active { display: flex; }
+    .mobile-menu a {
+      font-size: 1.3rem; font-weight: 700; color: var(--text-muted);
+      padding: 12px 24px; transition: color 0.2s;
+    }
+    .mobile-menu a:hover, .mobile-menu a:active { color: var(--white); }
+    .mobile-menu .mobile-cta {
+      margin-top: 20px; background: var(--cyan); color: #001a26;
+      padding: 14px 36px; border-radius: 50px; font-size: 1rem; font-weight: 700;
+    }
+
+    /* ── HERO ── */
+    .hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding-top: 100px; }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 70% 55% at 65% 45%, rgba(21,0,204,0.6) 0%, transparent 60%), radial-gradient(ellipse 45% 45% at 15% 65%, rgba(0,184,224,0.1) 0%, transparent 55%), linear-gradient(180deg, #06042e 0%, #080647 100%); }
+    .hero-geo { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); width: 520px; height: 520px; border: 1.5px solid rgba(0,184,224,0.14); border-radius: 40px; rotate: 15deg; }
+    .hero-geo::before { content: ''; position: absolute; inset: 50px; border: 1.5px solid rgba(0,184,224,0.09); border-radius: 28px; }
+    .hero-geo::after { content: ''; position: absolute; inset: 110px; border: 1.5px solid rgba(0,184,224,0.06); border-radius: 18px; }
+    .hero-content { position: relative; z-index: 1; max-width: 680px; }
+
+    /* ── BALL-TO-LOGO ANIMATION ── */
+    .ball-anim-wrap {
+      position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+      width: 420px; height: 420px; z-index: 1; pointer-events: none;
+    }
+    @media (max-width: 900px) { .ball-anim-wrap { display: none; } }
+    .ball-anim-canvas { width: 100%; height: 100%; }
+    .ball-anim-logo {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+      width: 400px; height: auto; opacity: 0; border-radius: 14px;
+      filter: drop-shadow(0 0 40px rgba(0,184,224,0.5)) drop-shadow(0 0 80px rgba(21,0,204,0.4));
+    }
+    .ball-anim-logo.reveal {
+      animation: logoReveal 0.8s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+    @keyframes logoReveal {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(-10deg); }
+      60% { opacity: 0.2; transform: translate(-50%, -50%) scale(1.1) rotate(2deg); }
+      100% { opacity: 0.15; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+    }
+    .ball-replay-btn {
+      position: absolute; bottom: 8px; right: 8px; z-index: 5; pointer-events: auto;
+      width: 40px; height: 40px; border-radius: 50%; border: 2px solid rgba(0,184,224,0.35);
+      background: rgba(12,9,96,0.75); backdrop-filter: blur(6px);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.4s, border-color 0.25s, background 0.25s;
+    }
+    .ball-replay-btn.visible { opacity: 1; }
+    .ball-replay-btn:hover { border-color: var(--cyan); background: rgba(0,184,224,0.15); }
+    .ball-replay-btn svg { width: 18px; height: 18px; fill: none; stroke: var(--cyan); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,184,224,0.1); border: 1px solid rgba(0,184,224,0.3); color: var(--cyan); padding: 6px 16px; border-radius: 50px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 28px; }
+    .hero-badge .dot { width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.3)} }
+    .hero-title { font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 900; line-height: 1.1; color: var(--white); margin-bottom: 22px; }
+    .hero-title .accent { color: var(--cyan); }
+    .hero-title-name { color: var(--cyan); font-size: 1.4em; letter-spacing: 0.04em; }
+    .hero-desc { font-size: 1.1rem; color: var(--text-muted); max-width: 540px; margin-bottom: 40px; line-height: 1.8; }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero-stats { display: flex; gap: 40px; margin-top: 60px; flex-wrap: wrap; }
+    .hero-stat .num { font-size: 2rem; font-weight: 900; color: var(--white); line-height: 1; }
+    .hero-stat .num span { color: var(--cyan); }
+    .hero-stat .lbl { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+
+    /* ── OPENING HOURS BAR ── */
+    .hours-bar { background: linear-gradient(90deg, #0c0960 0%, #0f0c80 50%, #0c0960 100%); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 0; }
+    .hours-inner { display: flex; align-items: center; gap: 24px; height: 64px; flex-wrap: wrap; }
+    .hours-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .hours-label { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.14em; color: var(--cyan); flex-shrink: 0; }
+    .hours-divider { width: 1px; height: 28px; background: rgba(0,184,224,0.2); flex-shrink: 0; }
+    .hours-days { display: flex; gap: 32px; flex: 1; }
+    .hours-day { display: flex; align-items: center; gap: 10px; }
+    .day-name { font-size: 0.82rem; color: var(--text-muted); font-weight: 600; }
+    .day-time { font-size: 1rem; font-weight: 800; color: var(--white); letter-spacing: 0.02em; }
+    .hours-book { background: var(--cyan); color: #001a26; padding: 9px 22px; border-radius: 50px; font-size: 0.82rem; font-weight: 700; white-space: nowrap; transition: all .2s; flex-shrink: 0; }
+    .hours-book:hover { background: var(--cyan-light); transform: translateY(-1px); }
+    @media (max-width: 600px) { .hours-inner { height: auto; padding: 14px 0; gap: 12px; } .hours-book { display: none; } }
+
+    /* ── ABOUT ── */
+    #about { background: #07053a; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .about-img-wrap { border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/3; background: var(--card-bg); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+    .about-img-placeholder { display: flex; flex-direction: column; align-items: center; gap: 16px; color: var(--text-muted); }
+    .about-img-placeholder .icon { font-size: 4rem; opacity: 0.4; }
+    .about-img-placeholder p { font-size: 0.85rem; opacity: 0.6; }
+    .about-visual { position: relative; }
+    .about-badge { position: absolute; bottom: -20px; right: -20px; background: linear-gradient(135deg, var(--brand-blue), var(--cyan)); border-radius: var(--radius); padding: 20px 24px; text-align: center; box-shadow: 0 20px 40px rgba(21,0,204,0.5); }
+    .about-badge .big { font-size: 2rem; font-weight: 900; color: var(--white); line-height: 1; }
+    .about-badge .small { font-size: 0.7rem; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: 0.1em; }
+    .about-badge .year { font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 6px; letter-spacing: 0.05em; }
+    .feature-list { list-style: none; margin-top: 28px; display: flex; flex-direction: column; gap: 16px; }
+    .feature-list li { display: flex; align-items: flex-start; gap: 14px; }
+    .feature-icon { flex-shrink: 0; width: 36px; height: 36px; background: rgba(0,184,224,0.12); border: 1px solid rgba(0,184,224,0.25); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .feature-text .ft { font-weight: 600; color: var(--white); font-size: 0.95rem; }
+    .feature-text .fd { font-size: 0.83rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── BOOKING BANNER ── */
+    .booking-banner { background: linear-gradient(135deg, var(--brand-blue) 0%, #0d00b8 100%); border-top: 1px solid rgba(0,184,224,0.2); border-bottom: 1px solid rgba(0,184,224,0.2); padding: 56px 0; position: relative; overflow: hidden; }
+    .booking-banner::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; border: 1px solid rgba(0,184,224,0.15); border-radius: 50%; pointer-events: none; }
+    .booking-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+    .booking-inner h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 800; color: var(--white); }
+    .booking-inner p { color: rgba(255,255,255,0.65); margin-top: 6px; font-size: 0.95rem; }
+    .btn-playtomic { background: var(--white); color: var(--brand-blue); padding: 16px 36px; border-radius: 50px; font-size: 1rem; font-weight: 800; display: inline-flex; align-items: center; gap: 10px; transition: all .25s; white-space: nowrap; box-shadow: 0 8px 32px rgba(0,0,0,0.25); }
+    .btn-playtomic:hover { background: var(--cyan-light); transform: translateY(-3px); }
+
+    /* ── PRICING ── */
+    #pricing { background: #06042e; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .pricing-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 28px; position: relative; transition: transform .25s, box-shadow .25s; display: flex; flex-direction: column; }
+    .pricing-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(21,0,204,0.4); }
+    .pricing-card.featured { border-color: var(--cyan); background: linear-gradient(160deg, #0f0c80, #0c0960); box-shadow: 0 0 0 1px rgba(0,184,224,0.35), 0 20px 60px rgba(0,0,0,0.4); }
+    .featured-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--cyan); color: #001a26; padding: 4px 18px; border-radius: 50px; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+    .pricing-name { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px; }
+    .pricing-annual { display: flex; align-items: flex-end; gap: 4px; margin-bottom: 4px; }
+    .pricing-annual .amount { font-size: 2.8rem; font-weight: 900; color: var(--white); line-height: 1; }
+    .pricing-annual .currency { font-size: 1.2rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; }
+    .pricing-annual .period { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
+    .pricing-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px; }
+    /* Time-slot rate rows */
+    .price-slots { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .price-slot { background: rgba(0,184,224,0.07); border: 1px solid rgba(0,184,224,0.15); border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .price-slot .slot-time { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; white-space: nowrap; }
+    .price-slot .slot-rate { font-size: 0.95rem; font-weight: 800; color: var(--white); white-space: nowrap; }
+    .price-slot .slot-rate.free { color: var(--cyan); }
+    .price-slot-divider { height: 1px; background: var(--border); margin: 4px 0; }
+    /* Feature list */
+    .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; flex: 1; }
+    .pricing-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: #b8cfe6; line-height: 1.4; }
+    .pricing-features li .check { color: var(--cyan); font-size: 0.9rem; flex-shrink: 0; margin-top: 2px; }
+    .pricing-features li .cross { color: #303070; font-size: 0.9rem; flex-shrink: 0; margin-top: 2px; }
+    .btn-plan { width: 100%; padding: 13px; border-radius: 50px; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all .25s; border: none; text-align: center; display: block; margin-top: auto; }
+    .btn-plan-outline { background: transparent; border: 2px solid rgba(0,184,224,0.4); color: var(--white); }
+    .btn-plan-outline:hover { background: rgba(0,184,224,0.12); border-color: var(--cyan); }
+    .btn-plan-cyan { background: var(--cyan); color: #001a26; }
+    .btn-plan-cyan:hover { background: var(--cyan-light); }
+
+    /* ── TRAINING ── */
+    #training { background: #07053a; }
+    .coaches-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .coach-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: transform .25s, box-shadow .25s; position: relative; }
+    .coach-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(21,0,204,0.4); }
+    .coach-photo { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: top; display: block; background: var(--dark-bg); }
+    .coach-photo-placeholder { width: 100%; aspect-ratio: 3/4; background: linear-gradient(160deg, #0c0960, #0f0c80); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--text-muted); }
+    .coach-photo-placeholder .ph-icon { font-size: 4rem; opacity: 0.3; }
+    .coach-photo-placeholder p { font-size: 0.75rem; opacity: 0.4; }
+    .coach-body { padding: 24px 26px 28px; }
+    .coach-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .coach-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(0,184,224,0.1); border: 1px solid rgba(0,184,224,0.25); color: var(--cyan); padding: 3px 10px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .coach-badge.gold { background: rgba(255,200,50,0.1); border-color: rgba(255,200,50,0.3); color: #ffc83d; }
+    .coach-name { font-size: 1.25rem; font-weight: 800; color: var(--white); margin-bottom: 4px; }
+    .coach-role { font-size: 0.8rem; color: var(--cyan); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+    .coach-desc { font-size: 0.87rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 18px; }
+    .coach-times { background: rgba(0,184,224,0.06); border: 1px solid rgba(0,184,224,0.15); border-radius: 10px; padding: 12px 16px; }
+    .coach-times-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 8px; }
+    .coach-time-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; padding: 3px 0; }
+    .coach-time-row .t-day { color: var(--text-muted); font-weight: 500; }
+    .coach-time-row .t-time { color: var(--white); font-weight: 700; }
+    .coach-booking-note { display: flex; align-items: flex-start; gap: 8px; background: rgba(255,200,50,0.07); border: 1px solid rgba(255,200,50,0.2); border-radius: 8px; padding: 10px 13px; margin-top: 12px; font-size: 0.78rem; color: #ffc83d; line-height: 1.5; }
+    .coach-booking-note .bn-icon { flex-shrink: 0; font-size: 0.9rem; margin-top: 1px; }
+    .coach-contact { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+    .coach-contact a { display: flex; align-items: center; gap: 9px; font-size: 0.83rem; color: var(--text-muted); transition: color .2s; text-decoration: none; }
+    .coach-contact a:hover { color: var(--cyan); }
+    .coach-contact .cc-icon { width: 28px; height: 28px; background: rgba(0,184,224,0.1); border: 1px solid rgba(0,184,224,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0; }
+    @media (max-width: 900px) { .coaches-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .coaches-grid { grid-template-columns: 1fr; } }
+
+    /* ── GALLERY ── */
+    #gallery { background: #07053a; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: auto auto; gap: 20px; }
+    .gallery-item { border-radius: 12px; overflow: hidden; background: var(--card-bg); border: 1px solid var(--border); aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; position: relative; transition: transform .25s, box-shadow .25s; cursor: pointer; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s; }
+    .gallery-item:hover { transform: scale(1.02); box-shadow: 0 12px 40px rgba(21,0,204,0.4); }
+    .gallery-item:hover img { transform: scale(1.05); }
+    .gallery-item.tall { grid-row: span 2; aspect-ratio: auto; }
+    .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(21,0,204,0.65) 0%, transparent 55%); opacity: 0; transition: opacity .25s; display: flex; align-items: flex-end; justify-content: space-between; padding: 18px; }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay span { font-size: 0.85rem; color: var(--white); font-weight: 600; }
+    .gallery-zoom-icon { font-size: 1.4rem; opacity: 0.85; }
+    /* ── LIGHTBOX ── */
+    .lightbox { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(3,2,26,0.96); align-items: center; justify-content: center; padding: 24px; }
+    .lightbox.active { display: flex; }
+    .lightbox-img { max-width: 92vw; max-height: 88vh; border-radius: 12px; box-shadow: 0 32px 80px rgba(0,0,0,0.8); object-fit: contain; }
+    .lightbox-close { position: absolute; top: 20px; right: 28px; font-size: 2.2rem; color: var(--white); cursor: pointer; line-height: 1; opacity: 0.75; transition: opacity .2s; }
+    .lightbox-close:hover { opacity: 1; }
+    .lightbox-prev, .lightbox-next { position: absolute; top: 50%; transform: translateY(-50%); font-size: 2.5rem; color: var(--white); cursor: pointer; opacity: 0.6; transition: opacity .2s; padding: 12px; user-select: none; }
+    .lightbox-prev { left: 16px; }
+    .lightbox-next { right: 16px; }
+    .lightbox-prev:hover, .lightbox-next:hover { opacity: 1; }
+
+    /* ── EVENTS ── */
+    #events { background: #07053a; }
+    .events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-bottom: 72px; }
+    .event-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px 28px; transition: transform .25s, box-shadow .25s; position: relative; overflow: hidden; }
+    .event-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--brand-blue), var(--cyan)); }
+    .event-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(21,0,204,0.35); }
+    .event-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,184,224,0.1); border: 1px solid rgba(0,184,224,0.25); color: var(--cyan); padding: 4px 12px; border-radius: 50px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+    .event-card h3 { font-size: 1.2rem; font-weight: 800; color: var(--white); margin-bottom: 10px; }
+    .event-card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; }
+    .event-meta { display: flex; flex-direction: column; gap: 6px; }
+    .event-meta span { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: #b8cfe6; font-weight: 500; }
+    .event-meta .dot { width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; flex-shrink: 0; }
+
+    /* ── PARTNERSHIP ── */
+    .partnership-banner { background: linear-gradient(135deg, #0c0960, #0f0c80); border: 1px solid var(--border-strong); border-radius: var(--radius); padding: 48px; display: flex; align-items: center; gap: 48px; flex-wrap: wrap; }
+    .partnership-logo { flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .partnership-logo img { width: 280px; height: auto; object-fit: contain; }
+    .partnership-text { flex: 1; min-width: 260px; }
+    .partnership-text .badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,184,224,0.1); border: 1px solid rgba(0,184,224,0.3); color: var(--cyan); padding: 5px 14px; border-radius: 50px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+    .partnership-text h3 { font-size: 1.5rem; font-weight: 800; color: var(--white); margin-bottom: 10px; }
+    .partnership-text p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.75; }
+
+    /* ── CONTACT ── */
+    #contact { background: #06042e; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 64px; align-items: start; }
+    .contact-info { display: flex; flex-direction: column; gap: 24px; margin-top: 8px; }
+    .contact-card { display: flex; align-items: flex-start; gap: 16px; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; transition: border-color .2s; }
+    .contact-card:hover { border-color: var(--border-strong); }
+    .contact-card-icon { flex-shrink: 0; width: 44px; height: 44px; background: rgba(0,184,224,0.12); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+    .contact-card h4 { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 4px; }
+    .contact-card p { font-size: 0.92rem; color: var(--white); }
+    .contact-form { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px 36px; }
+    .contact-form h3 { font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 24px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; }
+    .form-group input, .form-group textarea { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; font-size: 0.9rem; color: var(--white); font-family: inherit; transition: border-color .2s; outline: none; }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--cyan); }
+    .form-group textarea { height: 110px; resize: vertical; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .btn-submit { width: 100%; padding: 14px; background: var(--cyan); color: #001a26; border: none; border-radius: 50px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all .25s; font-family: inherit; box-shadow: 0 8px 28px rgba(0,184,224,0.3); }
+    .btn-submit:hover { background: var(--cyan-light); transform: translateY(-2px); }
+    .map-wrap { margin-top: 32px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); height: 240px; }
+    .map-wrap iframe { width: 100%; height: 100%; border: none; }
+
+    /* ── FOOTER ── */
+    footer { background: #030220; border-top: 1px solid var(--border); padding: 48px 0 32px; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+    .footer-brand .fname { font-size: 1rem; font-weight: 800; color: var(--white); }
+    .footer-brand .fsub { font-size: 0.78rem; color: var(--text-muted); margin-top: 3px; }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a { font-size: 0.85rem; color: var(--text-muted); transition: color .2s; }
+    .footer-links a:hover { color: var(--cyan); }
+    .footer-copy { font-size: 0.78rem; color: #2a2860; margin-top: 24px; text-align: center; }
+    .section-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
+
+    /* ── BACKGROUND WATERMARK ── */
+    .bg-watermark {
+      position: fixed; inset: 0; z-index: 2; pointer-events: none;
+      background-image: url('logo.png');
+      background-repeat: repeat;
+      background-size: 180px auto;
+      opacity: 0.035;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .pricing-grid, .events-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item.tall { grid-row: span 1; }
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+      .about-badge { bottom: 16px; right: 16px; }
+      .lang-switcher { gap: 3px; }
+      .lang-btn { padding: 4px 7px; font-size: 0.72rem; }
+      .hero { min-height: auto; padding: 120px 0 60px; }
+      .hero-geo { display: none; }
+      .hero-desc { font-size: 1rem; }
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+      .hero-actions .btn { width: 100%; justify-content: center; }
+      .section-title { font-size: clamp(1.5rem, 4vw, 2.2rem); }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+      .footer-copy { text-align: center; flex-direction: column; display: flex; gap: 8px; }
+      /* Images – ensure all visible */
+      .about-visual { width: 100%; }
+      .about-img-wrap { width: 100%; aspect-ratio: 16/9; }
+      .about-img-wrap img { width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important; }
+      .gallery-item { aspect-ratio: 16/9; }
+      .gallery-item.tall { aspect-ratio: 16/9; }
+      .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .coach-photo { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
+      .news-img-wrap { max-width: 100%; width: 100%; }
+      .news-img-wrap img { width: 100%; height: auto; display: block; }
+      .lightbox-img { max-width: 96vw; max-height: 80vh; }
+    }
+    @media (max-width: 600px) {
+      .section { padding: 48px 0; }
+      .container { padding: 0 16px; }
+      .pricing-grid, .events-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .coaches-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 20px; }
+      .hero-stat .num { font-size: 1.5rem; }
+      .hero-title { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+      .hero-title-name { font-size: 1.2em; }
+      .booking-inner { text-align: center; justify-content: center; flex-direction: column; gap: 20px; }
+      .booking-inner h2 { font-size: 1.2rem; }
+      .partnership-banner { flex-direction: column; text-align: center; }
+      .hours-inner { flex-direction: column; align-items: flex-start; height: auto; padding: 14px 0; gap: 8px; }
+      .hours-divider { display: none; }
+      .hours-book { display: none; }
+      .news-highlight { padding: 28px 20px; grid-template-columns: 1fr; }
+      .news-subscribe { flex-direction: column; }
+      .news-subscribe button { width: 100%; }
+      .contact-cards { grid-template-columns: 1fr; }
+      .coach-contact a span:last-child { font-size: 0.75rem; word-break: break-all; }
+      .nav-logo img { height: 100px; }
+      .impressum-box { padding: 28px 20px; }
+    }
+
+    /* ── NEWS ── */
+    .news-highlight {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+      background: linear-gradient(135deg, rgba(12,9,96,0.7) 0%, rgba(6,4,46,0.9) 100%);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 48px; position: relative; overflow: hidden;
+    }
+    .news-highlight::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,184,224,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .news-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,200,50,0.1); border: 1px solid rgba(255,200,50,0.3);
+      color: #ffc83d; padding: 5px 14px; border-radius: 50px;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .news-badge .pulse-dot {
+      width: 6px; height: 6px; background: #ffc83d; border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    .news-content h3 {
+      font-size: 1.5rem; font-weight: 800; color: var(--white); margin-bottom: 14px; line-height: 1.3;
+    }
+    .news-content p {
+      color: var(--text-muted); font-size: 0.98rem; line-height: 1.7; margin-bottom: 20px;
+    }
+    .news-subscribe {
+      display: flex; gap: 10px; max-width: 420px;
+    }
+    .news-subscribe input {
+      flex: 1; padding: 12px 18px; border-radius: 50px; border: 1px solid var(--border);
+      background: rgba(6,4,46,0.6); color: var(--white); font-family: inherit; font-size: 0.9rem;
+      outline: none; transition: border-color 0.25s;
+    }
+    .news-subscribe input::placeholder { color: var(--text-muted); }
+    .news-subscribe input:focus { border-color: var(--cyan); }
+    .news-subscribe button {
+      padding: 12px 24px; border-radius: 50px; border: none;
+      background: var(--cyan); color: #001a26; font-weight: 700; font-size: 0.85rem;
+      cursor: pointer; transition: all 0.25s; white-space: nowrap; font-family: inherit;
+    }
+    .news-subscribe button:hover { background: var(--cyan-light); transform: translateY(-1px); }
+    .news-visual {
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .news-img-wrap {
+      position: relative; width: 100%; max-width: 380px; border-radius: 14px; overflow: hidden;
+      border: 1px solid rgba(0,184,224,0.2);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+    }
+    .news-img-wrap img { width: 100%; height: auto; display: block; }
+    .news-coming-tag {
+      position: absolute; bottom: 12px; right: 12px;
+      background: rgba(0,184,224,0.15); border: 1px solid rgba(0,184,224,0.3);
+      color: var(--cyan); padding: 6px 16px; border-radius: 50px;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    @media (max-width: 900px) {
+      .news-highlight { grid-template-columns: 1fr; padding: 36px 28px; }
+      .news-visual { justify-content: flex-start; }
+      .news-img-wrap { max-width: 100%; }
+    }
+
+    /* ── IMPRESSUM MODAL ── */
+    .impressum-overlay {
+      display: none; position: fixed; inset: 0; z-index: 2000;
+      background: rgba(3,2,26,0.92); backdrop-filter: blur(8px);
+      align-items: center; justify-content: center; padding: 24px;
+    }
+    .impressum-overlay.active { display: flex; }
+    .impressum-box {
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius);
+      max-width: 640px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 48px;
+      position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    }
+    .impressum-close {
+      position: absolute; top: 16px; right: 16px; width: 36px; height: 36px;
+      border-radius: 50%; border: 1px solid var(--border); background: transparent;
+      color: var(--text-muted); font-size: 1.2rem; cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .impressum-close:hover { border-color: var(--cyan); color: var(--white); }
+    .impressum-box h2 { font-size: 1.5rem; font-weight: 800; color: var(--white); margin-bottom: 28px; }
+    .impressum-box h3 { font-size: 0.95rem; font-weight: 700; color: var(--cyan); margin: 24px 0 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .impressum-box h3:first-of-type { margin-top: 0; }
+    .impressum-box p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.7; margin-bottom: 6px; }
+    .impressum-box a { color: var(--cyan); transition: color 0.2s; }
+    .impressum-box a:hover { color: var(--cyan-light); }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ BACKGROUND WATERMARK ═══ -->
+  <div class="bg-watermark"></div>
+
+  <!-- ═══ NAVIGATION ═══ -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="#home" class="nav-logo">
+        <img src="logo.png" alt="The Cube – Padelarena Wehr" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="#news" data-i18n="nav_news">News</a></li>
+        <li><a href="#about" data-i18n="nav_about">Über uns</a></li>
+        <li><a href="#booking" data-i18n="nav_book">Buchen</a></li>
+        <li><a href="#pricing" data-i18n="nav_membership">Mitgliedschaft</a></li>
+        <li><a href="#training" data-i18n="nav_training">Training</a></li>
+        <li><a href="#events" data-i18n="nav_events">Events</a></li>
+        <li><a href="#gallery" data-i18n="nav_gallery">Galerie</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Kontakt</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="lang-switcher">
+          <button class="lang-btn active" onclick="setLang('de')">DE</button>
+          <button class="lang-btn" onclick="setLang('en')">EN</button>
+          <button class="lang-btn" onclick="setLang('es')">ES</button>
+        </div>
+        <a href="https://playtomic.com/clubs/the-cube-padelarena-wehratal" target="_blank" class="nav-cta" data-i18n="nav_cta">Jetzt buchen →</a>
+      </div>
+      <div class="nav-hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <!-- ═══ MOBILE MENU ═══ -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#news" data-i18n="nav_news" onclick="closeMobile()">News</a>
+    <a href="#about" data-i18n="nav_about" onclick="closeMobile()">Über uns</a>
+    <a href="#booking" data-i18n="nav_book" onclick="closeMobile()">Buchen</a>
+    <a href="#pricing" data-i18n="nav_membership" onclick="closeMobile()">Mitgliedschaft</a>
+    <a href="#training" data-i18n="nav_training" onclick="closeMobile()">Training</a>
+    <a href="#events" data-i18n="nav_events" onclick="closeMobile()">Events</a>
+    <a href="#gallery" data-i18n="nav_gallery" onclick="closeMobile()">Galerie</a>
+    <a href="#contact" data-i18n="nav_contact" onclick="closeMobile()">Kontakt</a>
+    <a href="https://playtomic.com/clubs/the-cube-padelarena-wehratal" target="_blank" class="mobile-cta" data-i18n="nav_cta" onclick="closeMobile()">Jetzt buchen →</a>
+  </div>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-geo"></div>
+    <!-- ═══ BALL → LOGO ANIMATION ═══ -->
+    <div class="ball-anim-wrap">
+      <canvas class="ball-anim-canvas" id="ballCanvas"></canvas>
+      <img src="logo.png" alt="The Cube" class="ball-anim-logo" id="ballLogo" />
+      <button class="ball-replay-btn" id="replayBtn" title="Animation wiederholen">
+        <svg viewBox="0 0 24 24"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+      </button>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          <span data-i18n="hero_badge">Jetzt geöffnet · Wehratal</span>
+        </div>
+        <h1 class="hero-title">
+          <span class="hero-title-name">The Cube</span><br />
+          <span data-i18n="hero_title1">Dein Padel-</span><br />
+          <span data-i18n="hero_title2">Erlebnis im Wehratal.</span>
+        </h1>
+        <p class="hero-desc" data-i18n="hero_desc">
+          Willkommen in The Cube – der modernen Padelarena im Wehratal.
+          Spitzencourtqualität, tolle Atmosphäre und eine leidenschaftliche Community
+          für alle, die Padel lieben.
+        </p>
+        <div class="hero-actions">
+          <a href="https://playtomic.com/clubs/the-cube-padelarena-wehratal" target="_blank" class="btn btn-primary" data-i18n="hero_btn_book">🎾 Court buchen</a>
+          <a href="#about" class="btn btn-outline" data-i18n="hero_btn_more">Mehr erfahren</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="num">2</div>
+            <div class="lbl" data-i18n="stat_courts">Padel-Courts</div>
+          </div>
+          <div class="hero-stat">
+            <div class="num">1 <span data-i18n="stat_covered_num">Überdacht</span></div>
+            <div class="lbl" data-i18n="stat_covered_lbl">Court 1 – mit Dach</div>
+          </div>
+          <div class="hero-stat">
+            <div class="num">1 <span data-i18n="stat_outdoor_num">Outdoor</span></div>
+            <div class="lbl" data-i18n="stat_outdoor_lbl">Court 2 – Open Air</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ OPENING HOURS BAR ═══ -->
+  <div class="hours-bar">
+    <div class="container">
+      <div class="hours-inner">
+        <div class="hours-icon">🕐</div>
+        <div class="hours-label" data-i18n="hours_label">Öffnungszeiten</div>
+        <div class="hours-divider"></div>
+        <div class="hours-days">
+          <div class="hours-day">
+            <span class="day-name" data-i18n="hours_daily">Täglich</span>
+            <span class="day-time">07:00 – 22:30</span>
+          </div>
+        </div>
+        <div class="hours-divider"></div>
+        <a href="https://playtomic.com/clubs/the-cube-padelarena-wehratal" target="_blank" class="hours-book" data-i18n="hours_cta">Jetzt buchen →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ NEWS ═══ -->
+  <section class="section" id="news">
+    <div class="container">
+      <div class="section-label" data-i18n="news_label">Neuigkeiten</div>
+      <h2 class="section-title" data-i18n="news_title">Was kommt als Nächstes</h2>
+      <p class="section-sub" data-i18n="news_sub">Große Pläne für die Zukunft des Padel im Wehratal.</p>
+      <div class="news-highlight">
+        <div class="news-content">
+          <div class="news-badge"><span class="pulse-dot"></span> <span data-i18n="news_badge">Ankündigung</span></div>
+          <h3 data-i18n="news_headline">Neue Indoor-Halle in Wehr geplant</h3>
+          <p data-i18n="news_desc">Wir planen den Bau einer modernen Indoor-Padelhalle in Wehr – für ganzjährigen Spielspaß bei jedem Wetter. Mehr Courts, mehr Möglichkeiten, mehr Padel. Sobald es Neuigkeiten gibt, erfährst du es hier zuerst.</p>
+          <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:18px;" data-i18n="news_stay">Bleib auf dem Laufenden – trag dich ein und verpasse keine Ankündigung.</p>
+          <div class="news-subscribe">
+            <input type="email" id="newsEmail" data-i18n-placeholder="news_email_ph" placeholder="Deine E-Mail-Adresse" />
+            <button onclick="document.getElementById('newsEmail').value='';this.textContent=translations[currentLang].news_done||'✓ Eingetragen!';" data-i18n="news_btn">Benachrichtigen</button>
+          </div>
+        </div>
+        <div class="news-visual">
+          <div class="news-img-wrap">
+            <img src="indoor-hall.jpg" alt="Neue Indoor-Padelhalle Wehr" />
+            <div class="news-coming-tag" data-i18n="news_coming">Coming soon</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ABOUT ═══ -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual">
+          <div class="about-img-wrap">
+            <img src="about.jpg" alt="The Cube – Padelarena Wehratal" style="width:100%;height:100%;object-fit:cover;" />
+          </div>
+          <div class="about-badge">
+            <div class="big">⭐ 5.0</div>
+            <div class="small" data-i18n="about_rating">Bewertung</div>
+            <div class="year" data-i18n="about_since">Seit 2024</div>
+          </div>
+        </div>
+        <div>
+          <div class="section-label" data-i18n="about_label">Über The Cube</div>
+          <h2 class="section-title" data-i18n="about_title">Padel auf höchstem Niveau im Wehratal</h2>
+          <p class="section-sub" data-i18n="about_sub">
+            The Cube ist mehr als eine Sportanlage – es ist ein Treffpunkt für
+            Padelenthusiasten aller Spielstärken. Seit 2024 bieten wir moderne Courts,
+            professionelle Trainingsangebote und eine einladende Atmosphäre.
+          </p>
+          <ul class="feature-list">
+            <li>
+              <div class="feature-icon">🏆</div>
+              <div class="feature-text">
+                <div class="ft" data-i18n="feat1_title">2 erstklassige Courts</div>
+                <div class="fd" data-i18n="feat1_desc">Court 1 mit Überdachung für wetterunabhängiges Spielen – Court 2 als Open-Air-Erlebnis unter freiem Himmel.</div>
+              </div>
+            </li>
+            <li>
+              <div class="feature-icon">🎓</div>
+              <div class="feature-text">
+                <div class="ft" data-i18n="feat2_title">Professionelles Training</div>
+                <div class="fd" data-i18n="feat2_desc">Kurse und Coaching für Anfänger bis Fortgeschrittene.</div>
+              </div>
+            </li>
+            <li>
+              <div class="feature-icon">🤝</div>
+              <div class="feature-text">
+                <div class="ft" data-i18n="feat3_title">Lebendige Community</div>
+                <div class="fd" data-i18n="feat3_desc">Turniere, Mixedgruppen und Events für alle Levels.</div>
+              </div>
+            </li>
+            <li>
+              <div class="feature-icon">📱</div>
+              <div class="feature-text">
+                <div class="ft" data-i18n="feat4_title">Einfaches Buchen via Playtomic</div>
+                <div class="fd" data-i18n="feat4_desc">Courts rund um die Uhr online reservieren – schnell und unkompliziert.</div>
+              </div>
+            </li>
+            <li>
+              <div class="feature-icon">🏓</div>
+              <div class="feature-text">
+                <div class="ft" data-i18n="feat5_title">Schläger & Bälle vor Ort</div>
+                <div class="fd" data-i18n="feat5_desc">Kein eigenes Equipment? Kein Problem – Schläger und Bälle stehen vor Ort für dich bereit.</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ BOOKING BANNER ═══ -->
+  <div class="booking-banner" id="booking">
+    <div class="container">
+      <div class="booking-inner">
+        <div>
+          <h2 data-i18n="book_title">Bereit zu spielen? Buche deinen Court jetzt.</h2>
+          <p data-i18n="book_sub">Verfügbarkeit prüfen und direkt über Playtomic reservieren – einfach, schnell, jederzeit.</p>
+        </div>
+        <a href="https://playtomic.com/clubs/the-cube-padelarena-wehratal" target="_blank" class="btn-playtomic">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          <span data-i18n="book_btn">Auf Playtomic buchen</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TRAINING ═══ -->
+  <section class="section" id="training">
+    <div class="container">
+      <div class="section-label" data-i18n="training_label">Training & Coaches</div>
+      <h2 class="section-title" data-i18n="training_title">Lern von den Besten</h2>
+      <p class="section-sub" data-i18n="training_sub">Unser erfahrenes Trainerteam begleitet dich – egal ob Einsteiger oder ambitionierter Spieler.</p>
+      <div class="coaches-grid">
+
+        <!-- ── MARC BRÜX ── -->
+        <div class="coach-card">
+          <img src="coach-marc.jpg" alt="Marc Brüx" class="coach-photo" />
+          <div class="coach-body">
+            <div class="coach-badges">
+              <span class="coach-badge gold">🏅 DPV <span data-i18n="badge_licensed">Lizenztrainer</span></span>
+            </div>
+            <div class="coach-name">Marc Brüx</div>
+            <div class="coach-role" data-i18n="coach_role_head">Head Coach</div>
+            <p class="coach-desc" data-i18n="marc_desc">Lizenzierter DPV-Padel-Coach mit langjähriger Erfahrung im Spieler- und Gruppentraining. Marc verbindet technisches Know-how mit einer motivierenden Trainingsatmosphäre.</p>
+            <div class="coach-times">
+              <div class="coach-times-label" data-i18n="coach_times_label">Trainingszeiten</div>
+              <div class="coach-time-row"><span data-i18n="marc_times">Individuelle Termine nach Absprache</span></div>
+            </div>
+            <div class="coach-booking-note">
+              <span class="bn-icon">📅</span>
+              <span data-i18n="coach_book_note">Training bitte vorab mit dem Coach vereinbaren.</span>
+            </div>
+            <div class="coach-contact">
+              <a href="tel:+491781405212">
+                <span class="cc-icon">📞</span>
+                <span>+49 178 140 52 12</span>
+              </a>
+              <a href="mailto:marc.bruex@t-online.de">
+                <span class="cc-icon">✉️</span>
+                <span>marc.bruex@t-online.de</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── MARKUS ZEOLI ── -->
+        <div class="coach-card">
+          <img src="coach-markus.jpg" alt="Markus Zeoli" class="coach-photo" />
+          <div class="coach-body">
+            <div class="coach-badges">
+              <span class="coach-badge gold">🏅 DPV <span data-i18n="badge_licensed">Lizenztrainer</span></span>
+            </div>
+            <div class="coach-name">Markus Zeoli</div>
+            <div class="coach-role" data-i18n="coach_role_senior">Senior Coach</div>
+            <p class="coach-desc" data-i18n="markus_desc">Lizenzierter DPV-Padel-Coach mit jahrelanger Erfahrung in der Spielerentwicklung. Markus legt besonderen Wert auf Technik, Taktik und individuelle Förderung.</p>
+            <div class="coach-times">
+              <div class="coach-times-label" data-i18n="coach_times_label">Trainingszeiten</div>
+              <div class="coach-time-row"><span class="t-day" data-i18n="days_thu">Do</span><span class="t-time">17:00 – 20:00</span></div>
+            </div>
+            <div class="coach-booking-note">
+              <span class="bn-icon">📅</span>
+              <span data-i18n="coach_book_note">Training bitte vorab mit dem Coach vereinbaren.</span>
+            </div>
+            <div class="coach-contact">
+              <a href="tel:+41787533321">
+                <span class="cc-icon">📞</span>
+                <span>+41 78 753 33 21</span>
+              </a>
+              <a href="mailto:m.zeoli@web.de">
+                <span class="cc-icon">✉️</span>
+                <span>m.zeoli@web.de</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── JOSHUA ZEOLI ── -->
+        <div class="coach-card">
+          <img src="coach-joshua.jpg" alt="Joshua Zeoli" class="coach-photo" />
+          <div class="coach-body">
+            <div class="coach-badges">
+              <span class="coach-badge">🎾 <span data-i18n="badge_coach">Coach</span></span>
+              <span class="coach-badge gold">🇨🇭 <span data-i18n="badge_top10">Top 10 Schweiz</span></span>
+            </div>
+            <div class="coach-name">Joshua Zeoli</div>
+            <div class="coach-role" data-i18n="coach_role_pro">Pro Coach & Player</div>
+            <p class="coach-desc" data-i18n="nathalie_desc">Erfahrener Trainer und aktiver Top-10-Spieler in der Schweizer Rangliste. Joshua bringt hochkarätiges Spielverständnis direkt ins Training und gibt wertvolle Einblicke auf Profiniveau.</p>
+            <div class="coach-times">
+              <div class="coach-times-label" data-i18n="coach_times_label">Trainingszeiten</div>
+              <div class="coach-time-row"><span class="t-day" data-i18n="days_fri">Fr</span><span class="t-time">16:00 – 18:00</span></div>
+            </div>
+            <div class="coach-booking-note">
+              <span class="bn-icon">📅</span>
+              <span data-i18n="coach_book_note">Training bitte vorab mit dem Coach vereinbaren.</span>
+            </div>
+            <div class="coach-contact">
+              <a href="tel:+491727267060">
+                <span class="cc-icon">📞</span>
+                <span>+49 172 726 70 60</span>
+              </a>
+              <a href="mailto:joshua.zeoli@web.de">
+                <span class="cc-icon">✉️</span>
+                <span>joshua.zeoli@web.de</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ PRICING ═══ -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="section-label" data-i18n="price_label">Mitgliedschaft</div>
+      <h2 class="section-title" data-i18n="price_title">Das richtige Angebot für dich</h2>
+      <p class="section-sub" data-i18n="price_sub">Ob Gelegenheitsspieler oder regelmäßiger Court-Stammgast – wir haben das passende Paket für jede Spielfreude.</p>
+      <div class="pricing-grid">
+
+        <!-- ── CARD 1: Basis ── -->
+        <div class="pricing-card">
+          <div class="pricing-name" data-i18n="plan1_name">Basis</div>
+          <div class="pricing-annual">
+            <span class="amount" style="font-size:1.8rem" data-i18n="plan1_paytype">Pay per Play</span>
+          </div>
+          <div class="pricing-desc" data-i18n="plan1_desc">Du zahlst nur, wenn du spielst – keine Bindung, keine Jahresgebühr.</div>
+          <div class="price-slots">
+            <div class="price-slot">
+              <span class="slot-time">07:30 – 17:00</span>
+              <span class="slot-rate">€6 <span data-i18n="per_person">/ Person</span></span>
+            </div>
+            <div class="price-slot">
+              <span class="slot-time">17:00 – 22:30</span>
+              <span class="slot-rate">€7 <span data-i18n="per_person">/ Person</span></span>
+            </div>
+          </div>
+          <ul class="pricing-features">
+            <li><span class="check">✓</span> <span data-i18n="plan1_f1">Buchung via Playtomic</span></li>
+            <li><span class="check">✓</span> <span data-i18n="plan1_f2">7 Tage im Voraus buchbar</span></li>
+            <li><span class="check">✓</span> <span data-i18n="plan1_f3">Keine Mitgliedschaft nötig</span></li>
+            <li><span class="cross">✗</span> <span data-i18n="plan1_f4">Keine Rabatte</span></li>
+          </ul>
+          <a href="https://playtomic.com/clubs/the-cube-padelarena-wehratal" target="_blank" class="btn-plan btn-plan-outline" data-i18n="plan1_btn">Court buchen</a>
+        </div>
+
+        <!-- ── CARD 2: Schüler ── -->
+        <div class="pricing-card">
+          <div class="pricing-name" data-i18n="plan2_name">Schüler</div>
+          <div class="pricing-annual">
+            <span class="currency">€</span>
+            <span class="amount">300</span>
+            <span class="period" data-i18n="plan_year">/ Jahr</span>
+          </div>
+          <div class="pricing-desc" data-i18n="plan2_desc">Für Schüler und Jugendliche – mehr spielen, weniger zahlen.</div>
+          <div class="price-slots">
+            <div class="price-slot">
+              <span class="slot-time"><span data-i18n="plan2_days">Mo–Fr</span> · 07:30 – 17:00</span>
+              <span class="slot-rate free" data-i18n="plan_free">Gratis</span>
+            </div>
+            <div class="price-slot">
+              <span class="slot-time">17:00 – 22:30</span>
+              <span class="slot-rate">€3,50 <span data-i18n="per_person">/ Person</span></span>
+            </div>
+          </div>
+          <ul class="pricing-features">
+            <li><span class="check">✓</span> <span data-i18n="plan2_f1">Max. 4 Std. pro Tag</span></li>
+            <li><span class="check">✓</span> <span data-i18n="plan2_f2">Max. 4 aktive Buchungen gleichzeitig</span></li>
+            <li><span class="check">✓</span> <span data-i18n="plan2_f3">7 Tage im Voraus buchbar</span></li>
+          </ul>
+          <a href="#contact" class="btn-plan btn-plan-outline" data-i18n="plan2_btn">Mitglied werden</a>
+        </div>
+
+        <!-- ── CARD 3: Premium ── -->
+        <div class="pricing-card featured">
+          <div class="featured-badge" data-i18n="plan_popular">Beliebteste Wahl</div>
+          <div class="pricing-name" data-i18n="plan3_name">Premium</div>
+          <div class="pricing-annual">
+            <span class="currency">€</span>
+            <span class="amount">500</span>
+            <span class="period" data-i18n="plan_year2">/ Jahr</span>
+          </div>
+          <div class="pricing-desc" data-i18n="plan3_desc">Maximale Freiheit – jederzeit gratis spielen, früher buchen.</div>
+          <div class="price-slots">
+            <div class="price-slot">
+              <span class="slot-time" data-i18n="plan3_always">Jederzeit</span>
+              <span class="slot-rate free" data-i18n="plan_free">Gratis</span>
+            </div>
+          </div>
+          <ul class="pricing-features">
+            <li><span class="check">✓</span> <span data-i18n="plan3_f1">Max. 4 Std. pro Tag</span></li>
+            <li><span class="check">✓</span> <span data-i18n="plan3_f2">Max. 4 aktive Buchungen gleichzeitig</span></li>
+            <li><span class="check">✓</span> <span data-i18n="plan3_f3">14 Tage Buchungsvorlauf (exklusiv)</span></li>
+          </ul>
+          <a href="#contact" class="btn-plan btn-plan-cyan" data-i18n="plan3_btn">Jetzt anfragen</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ EVENTS ═══ -->
+  <section class="section" id="events">
+    <div class="container">
+      <div class="section-label" data-i18n="events_label">Events & Turniere</div>
+      <h2 class="section-title" data-i18n="events_title">Immer was los bei The Cube</h2>
+      <p class="section-sub" data-i18n="events_sub">Von wöchentlichen Social-Spielen bis zu offiziellen Turnieren – hier findest du alle Events auf einen Blick.</p>
+      <div class="events-grid">
+        <div class="event-card">
+          <div class="event-tag" data-i18n="ev1_tag">🎾 Wöchentlich</div>
+          <h3 data-i18n="ev1_title">Social Padel</h3>
+          <p data-i18n="ev1_desc">Komm vorbei, spiel mit und lern neue Mitspieler kennen! Unser wöchentliches Social Padel ist für alle Levels offen – einfach vorbeikommen und mitmachen.</p>
+          <div class="event-meta">
+            <span><span class="dot"></span> <span data-i18n="ev1_m1">Jeden Freitag</span></span>
+            <span><span class="dot"></span> 18:00 – 20:00 Uhr</span>
+            <span><span class="dot"></span> <span data-i18n="ev1_m3">Alle Spielstärken willkommen</span></span>
+            <span><span class="dot"></span> <span data-i18n="ev1_m4">10 € pro Person</span></span>
+          </div>
+        </div>
+        <div class="event-card">
+          <div class="event-tag" data-i18n="ev2_tag">🏆 Turnier</div>
+          <h3 data-i18n="ev2_title">Mexicano Turniere</h3>
+          <p data-i18n="ev2_desc">Das beliebte Mexicano-Format bei The Cube – ein spannendes Rundum-Turnier, bei dem du mit wechselnden Partnern spielst und immer gegen gleichstarke Teams antrittst.</p>
+          <div class="event-meta">
+            <span><span class="dot"></span> <span data-i18n="ev2_m1">Regelmäßige Termine</span></span>
+            <span><span class="dot"></span> <span data-i18n="ev2_m2">Ankündigungen folgen</span></span>
+            <span><span class="dot"></span> <span data-i18n="ev2_m3">Anmeldung via Playtomic</span></span>
+          </div>
+          <a href="https://playtomic.com/clubs/the-cube-padelarena-wehratal" target="_blank" class="btn-plan btn-plan-outline" style="margin-top:20px;display:inline-block;padding:10px 22px;font-size:0.85rem;" data-i18n="ev2_btn">Jetzt anmelden →</a>
+        </div>
+        <div class="event-card">
+          <div class="event-tag" data-i18n="ev3_tag">🇨🇭 Offiziell</div>
+          <h3 data-i18n="ev3_title">Swiss Tennis Padel Turniere</h3>
+          <p data-i18n="ev3_desc">Als lizenzierter Partner von Swiss Tennis Padel veranstalten wir offizielle Turniere im nationalen Kalender. Spieler erhalten offizielle Ranglistenpunkte.</p>
+          <div class="event-meta">
+            <span><span class="dot"></span> <span data-i18n="ev3_m1">Offizielle Ranglistenturniere</span></span>
+            <span><span class="dot"></span> <span data-i18n="ev3_m2">Termine werden bekanntgegeben</span></span>
+            <span><span class="dot"></span> <span data-i18n="ev3_m3">Alle Infos via Swiss Tennis Padel</span></span>
+          </div>
+          <a href="https://swisstennis-padel.tournamentsoftware.com" target="_blank" class="btn-plan btn-plan-outline" style="margin-top:20px;display:inline-block;padding:10px 22px;font-size:0.85rem;" data-i18n="ev3_btn">Jetzt registrieren →</a>
+        </div>
+      </div>
+      <div class="partnership-banner">
+        <div class="partnership-logo">
+          <a href="https://swisstennis-padel.tournamentsoftware.com" target="_blank">
+            <img src="swisstennis-padel-logo.jpg" alt="Swiss Tennis Padel" />
+          </a>
+        </div>
+        <div class="partnership-text">
+          <div class="badge" data-i18n="partner_badge">✅ Offiziell lizenzierter Partner</div>
+          <h3><a href="https://swisstennis-padel.tournamentsoftware.com" target="_blank" style="color:inherit; text-decoration:none;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='inherit'" data-i18n="partner_title">Swiss Tennis Padel Partner</a></h3>
+          <p data-i18n="partner_desc">The Cube – Padelarena Wehratal ist offizieller lizenzierter Partner von Swiss Tennis Padel. Wir organisieren und veranstalten offizielle Swiss Tennis Padel Ranglistenturniere und sind damit Teil des nationalen Padel-Netzwerks der Schweiz.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ GALLERY ═══ -->
+  <section class="section" id="gallery">
+    <div class="container">
+      <div class="section-label" data-i18n="gallery_label">Galerie</div>
+      <h2 class="section-title" data-i18n="gallery_title">Einblick in The Cube</h2>
+      <p class="section-sub" data-i18n="gallery_sub">Moderne Anlage, tolle Atmosphäre – überzeug dich selbst.</p>
+      <div class="gallery-grid">
+        <div class="gallery-item tall" onclick="openLightbox(0)">
+          <img src="photo1.jpg" alt="The Cube Court 1" />
+          <div class="gallery-overlay"><span data-i18n="gal1">Hauptcourt</span><span class="gallery-zoom-icon">🔍</span></div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(1)">
+          <img src="photo3.jpg" alt="The Cube" />
+          <div class="gallery-overlay"><span data-i18n="gal3">The Cube</span><span class="gallery-zoom-icon">🔍</span></div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(2)">
+          <img src="photo4.jpg" alt="The Cube" />
+          <div class="gallery-overlay"><span data-i18n="gal4">The Cube</span><span class="gallery-zoom-icon">🔍</span></div>
+        </div>
+      </div>
+
+      <!-- ── LIGHTBOX ── -->
+      <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <span class="lightbox-prev" onclick="shiftLightbox(-1, event)">&#8249;</span>
+        <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+        <span class="lightbox-next" onclick="shiftLightbox(1, event)">&#8250;</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT ═══ -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="section-label" data-i18n="contact_label">Kontakt & Anfahrt</div>
+      <h2 class="section-title" data-i18n="contact_title">Wir freuen uns auf dich</h2>
+      <p class="section-sub" data-i18n="contact_sub">Fragen zur Mitgliedschaft, zu Trainings oder zum Betrieb? Schreib uns einfach!</p>
+      <div class="contact-grid">
+        <div>
+          <div class="contact-info">
+            <div class="contact-card">
+              <div class="contact-card-icon">👤</div>
+              <div>
+                <h4 data-i18n="cc_team">Ihre Ansprechpartner</h4>
+                <p>Joshua, Markus &amp; Antonio Zeoli</p>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon">📍</div>
+              <div>
+                <h4 data-i18n="cc_address">Adresse</h4>
+                <p>Stadionweg 14<br/>79664 Wehr, Deutschland</p>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon">📞</div>
+              <div>
+                <h4 data-i18n="cc_phone">Telefon</h4>
+                <p><a href="tel:+491727267060" style="color:inherit;">Joshua Zeoli: +49 172 726 70 60</a></p>
+                <p><a href="tel:+41787533321" style="color:inherit;">Markus Zeoli: +41 78 753 33 21</a></p>
+                <p><a href="tel:+41793207926" style="color:inherit;">Antonio Zeoli: +41 79 320 79 26</a></p>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon">✉️</div>
+              <div>
+                <h4 data-i18n="cc_email">E-Mail</h4>
+                <p><a href="mailto:padelarena79664@gmail.com" style="color:inherit;">padelarena79664@gmail.com</a></p>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon">🕐</div>
+              <div>
+                <h4 data-i18n="cc_hours">Öffnungszeiten</h4>
+                <p data-i18n="cc_hours_val">Täglich: 07:00 – 22:30 Uhr</p>
+              </div>
+            </div>
+          </div>
+          <div class="map-wrap">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.515087247746!2d7.905165276870695!3d47.635556571192566!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47904d9160fb10c3%3A0x12b44e2464a4d62f!2sStadionweg%2014%2C%2079664%20Wehr%2C%20Deutschland!5e0!3m2!1sde!2sch!4v1774455582441!5m2!1sde!2sch" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+        <div class="contact-form">
+          <h3 data-i18n="form_title">Nachricht senden</h3>
+          <form onsubmit="handleSubmit(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="form_fname">Vorname</label>
+                <input type="text" data-i18n-placeholder="form_fname_ph" placeholder="Max" required />
+              </div>
+              <div class="form-group">
+                <label data-i18n="form_lname">Nachname</label>
+                <input type="text" data-i18n-placeholder="form_lname_ph" placeholder="Mustermann" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label data-i18n="form_email">E-Mail</label>
+              <input type="email" data-i18n-placeholder="form_email_ph" placeholder="max@email.de" required />
+            </div>
+            <div class="form-group">
+              <label data-i18n="form_subject">Betreff</label>
+              <input type="text" data-i18n-placeholder="form_subject_ph" placeholder="z.B. Mitgliedschaft anfragen" />
+            </div>
+            <div class="form-group">
+              <label data-i18n="form_msg">Nachricht</label>
+              <textarea data-i18n-placeholder="form_msg_ph" placeholder="Deine Nachricht…" required></textarea>
+            </div>
+            <button type="submit" class="btn-submit" data-i18n="form_btn">Nachricht senden →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ IMPRESSUM MODAL ═══ -->
+  <div class="impressum-overlay" id="impressumOverlay" onclick="if(event.target===this)closeImpressum()">
+    <div class="impressum-box">
+      <button class="impressum-close" onclick="closeImpressum()">&times;</button>
+      <h2>Impressum</h2>
+
+      <h3>Angaben gemäß § 5 TMG</h3>
+      <p>Antonio und Gabriele Zeoli Tennishalle Wehr GbR</p>
+      <p>Stadionweg 14<br/>79664 Wehr, Deutschland</p>
+
+      <h3>Vertreten durch</h3>
+      <p>Antonio Zeoli<br/>Gabriele Zeoli</p>
+
+      <h3>Kontakt</h3>
+      <p>Telefon: <a href="tel:+41793207926">+41 79 320 79 26</a></p>
+      <p>E-Mail: <a href="mailto:m.zeoli@web.de">m.zeoli@web.de</a></p>
+
+      <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
+      <p>Antonio Zeoli<br/>Stadionweg 14<br/>79664 Wehr, Deutschland</p>
+
+      <h3>Haftungsausschluss</h3>
+      <p>Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>
+
+      <h3>Urheberrecht</h3>
+      <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.</p>
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="fname">The Cube – Padelarena Wehratal</div>
+          <div class="fsub" data-i18n="footer_sub">Padel. Leidenschaft. Community.</div>
+        </div>
+        <div class="footer-links">
+          <a href="#about" data-i18n="nav_about">Über uns</a>
+          <a href="#pricing" data-i18n="nav_membership">Mitgliedschaft</a>
+          <a href="#events" data-i18n="nav_events">Events</a>
+          <a href="https://playtomic.com/clubs/the-cube-padelarena-wehratal" target="_blank">Playtomic</a>
+          <a href="#news" data-i18n="nav_news">News</a>
+          <a href="#contact" data-i18n="nav_contact">Kontakt</a>
+        </div>
+      </div>
+      <div class="footer-copy">
+        <span data-i18n="footer_copy">© 2026 The Cube – Padelarena Wehratal. Alle Rechte vorbehalten.</span>
+        <span style="margin-left:16px;"><a href="#" onclick="openImpressum();return false;" style="color:var(--text-muted);text-decoration:underline;text-underline-offset:3px;transition:color 0.2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-muted)'">Impressum</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ═══════════════════════════════════════
+       TRANSLATIONS
+    ═══════════════════════════════════════ */
+    const translations = {
+      de: {
+        nav_about:'Über uns', nav_book:'Buchen', nav_membership:'Mitgliedschaft',
+        nav_training:'Training',
+        nav_events:'Events', nav_gallery:'Galerie', nav_news:'News', nav_contact:'Kontakt',
+        nav_cta:'Jetzt buchen →',
+        news_label:'Neuigkeiten', news_title:'Was kommt als Nächstes', news_sub:'Große Pläne für die Zukunft des Padel im Wehratal.',
+        news_badge:'Ankündigung', news_headline:'Neue Indoor-Halle in Wehr geplant',
+        news_desc:'Wir planen den Bau einer modernen Indoor-Padelhalle in Wehr – für ganzjährigen Spielspaß bei jedem Wetter. Mehr Courts, mehr Möglichkeiten, mehr Padel. Sobald es Neuigkeiten gibt, erfährst du es hier zuerst.',
+        news_stay:'Bleib auf dem Laufenden – trag dich ein und verpasse keine Ankündigung.',
+        news_btn:'Benachrichtigen', news_done:'✓ Eingetragen!', news_email_ph:'Deine E-Mail-Adresse', news_coming:'Demnächst',
+        hero_badge:'Jetzt geöffnet · Wehratal',
+        hero_title1:'Dein Padel-', hero_title2:'Erlebnis im Wehratal',
+        hero_desc:'Willkommen in The Cube – der modernen Padelarena im Wehratal. Spitzencourtqualität, tolle Atmosphäre und eine leidenschaftliche Community für alle, die Padel lieben.',
+        hero_btn_book:'🎾 Court buchen', hero_btn_more:'Mehr erfahren',
+        stat_courts:'Padel-Courts', stat_covered_num:'Überdacht', stat_covered_lbl:'Court 1 – mit Dach',
+        stat_outdoor_num:'Outdoor', stat_outdoor_lbl:'Court 2 – Open Air',
+        about_label:'Über The Cube', about_title:'Padel auf höchstem Niveau im Wehratal',
+        about_sub:'The Cube ist mehr als eine Sportanlage – es ist ein Treffpunkt für Padelenthusiasten aller Spielstärken. Seit 2024 bieten wir moderne Courts, professionelle Trainingsangebote und eine einladende Atmosphäre.',
+        about_rating:'Bewertung', about_since:'Seit 2024',
+        about_img_placeholder:'Foto der Anlage hier einfügen',
+        feat1_title:'2 erstklassige Courts', feat1_desc:'Court 1 mit Überdachung für wetterunabhängiges Spielen – Court 2 als Open-Air-Erlebnis unter freiem Himmel.',
+        feat2_title:'Professionelles Training', feat2_desc:'Kurse und Coaching für Anfänger bis Fortgeschrittene.',
+        feat3_title:'Lebendige Community', feat3_desc:'Turniere, Mixedgruppen und Events für alle Levels.',
+        feat4_title:'Einfaches Buchen via Playtomic', feat4_desc:'Courts rund um die Uhr online reservieren – schnell und unkompliziert.',
+        feat5_title:'Schläger & Bälle vor Ort', feat5_desc:'Kein eigenes Equipment? Kein Problem – Schläger und Bälle stehen vor Ort für dich bereit.',
+        book_title:'Bereit zu spielen? Buche deinen Court jetzt.',
+        book_sub:'Verfügbarkeit prüfen und direkt über Playtomic reservieren – einfach, schnell, jederzeit.',
+        book_btn:'Auf Playtomic buchen',
+        training_label:'Training & Coaches', training_title:'Lern von den Besten',
+        training_sub:'Unser erfahrenes Trainerteam begleitet dich – egal ob Einsteiger oder ambitionierter Spieler.',
+        coach_photo_hint:'Foto hier einfügen', badge_licensed:'Lizenztrainer', badge_coach:'Coach', badge_top10:'Top 10 Schweiz',
+        coach_role_head:'Head Coach', coach_role_senior:'Senior Coach', coach_role_pro:'Pro Coach & Player',
+        coach_times_label:'Trainingszeiten',
+        days_mow:'Mo / Mi', days_tuth:'Di / Do', days_fri:'Fr', days_sat:'Sa', days_sun:'So',
+        coach_book_note:'Training bitte vorab mit dem Coach vereinbaren.',
+        marc_desc:'Lizenzierter DPV-Padel-Coach mit langjähriger Erfahrung im Spieler- und Gruppentraining. Marc verbindet technisches Know-how mit einer motivierenden Trainingsatmosphäre.',
+        marc_times:'Individuelle Termine nach Absprache',
+        markus_desc:'Lizenzierter DPV-Padel-Coach mit jahrelanger Erfahrung in der Spielerentwicklung. Markus legt besonderen Wert auf Technik, Taktik und individuelle Förderung.',
+        nathalie_desc:'Erfahrener Trainer und aktiver Top-10-Spieler in der Schweizer Rangliste. Joshua bringt hochkarätiges Spielverständnis direkt ins Training und gibt wertvolle Einblicke auf Profiniveau.',
+        price_label:'Mitgliedschaft', price_title:'Das richtige Angebot für dich',
+        price_sub:'Ob Gelegenheitsspieler oder regelmäßiger Court-Stammgast – wir haben das passende Paket für jede Spielfreude.',
+        plan1_name:'Basis', plan1_paytype:'Pay per Play', plan1_desc:'Du zahlst nur, wenn du spielst – keine Bindung, keine Jahresgebühr.',
+        per_person:'/ Person',
+        plan1_f1:'Buchung via Playtomic', plan1_f2:'7 Tage im Voraus buchbar', plan1_f3:'Keine Mitgliedschaft nötig', plan1_f4:'Keine Rabatte',
+        plan1_btn:'Court buchen', plan_popular:'Beliebteste Wahl',
+        plan2_name:'Schüler', plan_year:'/ Jahr', plan2_desc:'Für Schüler und Jugendliche – mehr spielen, weniger zahlen.',
+        plan2_days:'Mo–Fr', plan_free:'Gratis',
+        plan2_f1:'Max. 4 Std. pro Tag', plan2_f2:'Max. 4 aktive Buchungen gleichzeitig', plan2_f3:'7 Tage im Voraus buchbar',
+        plan2_btn:'Mitglied werden',
+        plan3_name:'Premium', plan_year2:'/ Jahr', plan3_desc:'Maximale Freiheit – jederzeit gratis spielen, früher buchen.',
+        plan3_always:'Jederzeit',
+        plan3_f1:'Max. 4 Std. pro Tag', plan3_f2:'Max. 4 aktive Buchungen gleichzeitig', plan3_f3:'14 Tage Buchungsvorlauf (exklusiv)',
+        plan3_btn:'Jetzt anfragen',
+        events_label:'Events & Turniere', events_title:'Immer was los bei The Cube',
+        events_sub:'Von wöchentlichen Social-Spielen bis zu offiziellen Turnieren – hier findest du alle Events auf einen Blick.',
+        hours_label:'Öffnungszeiten', hours_daily:'Täglich', hours_cta:'Jetzt buchen →',
+        ev1_tag:'🎾 Wöchentlich', ev1_title:'Social Padel',
+        ev1_desc:'Komm vorbei, spiel mit und lern neue Mitspieler kennen! Unser wöchentliches Social Padel ist für alle Levels offen – einfach vorbeikommen und mitmachen.',
+        ev1_m1:'Jeden Freitag', ev1_m3:'Alle Spielstärken willkommen', ev1_m4:'10 € pro Person',
+        ev2_tag:'🏆 Turnier', ev2_title:'Mexicano Turniere',
+        ev2_desc:'Das beliebte Mexicano-Format bei The Cube – ein spannendes Rundum-Turnier, bei dem du mit wechselnden Partnern spielst und immer gegen gleichstarke Teams antrittst.',
+        ev2_m1:'Regelmäßige Termine', ev2_m2:'Ankündigungen folgen', ev2_m3:'Anmeldung via Playtomic', ev2_btn:'Jetzt anmelden →',
+        ev3_tag:'🇨🇭 Offiziell', ev3_title:'Swiss Tennis Padel Turniere',
+        ev3_desc:'Als lizenzierter Partner von Swiss Tennis Padel veranstalten wir offizielle Turniere im nationalen Kalender. Spieler erhalten offizielle Ranglistenpunkte.',
+        ev3_m1:'Offizielle Ranglistenturniere', ev3_m2:'Termine werden bekanntgegeben', ev3_m3:'Alle Infos via Swiss Tennis Padel', ev3_btn:'Jetzt registrieren →',
+        partner_badge:'✅ Offiziell lizenzierter Partner', partner_title:'Swiss Tennis Padel Partner',
+        partner_desc:'The Cube – Padelarena Wehratal ist offizieller lizenzierter Partner von Swiss Tennis Padel. Wir organisieren und veranstalten offizielle Swiss Tennis Padel Ranglistenturniere und sind damit Teil des nationalen Padel-Netzwerks der Schweiz.',
+        gallery_label:'Galerie', gallery_title:'Einblick in The Cube', gallery_sub:'Moderne Anlage, tolle Atmosphäre – überzeug dich selbst.',
+        gal1:'Hauptcourt', gal2:'Court 2', gal3:'Court 3', gal4:'Club-Lounge', gal5:'Turnier-Highlights',
+        contact_label:'Kontakt & Anfahrt', contact_title:'Wir freuen uns auf dich',
+        contact_sub:'Fragen zur Mitgliedschaft, zu Trainings oder zum Betrieb? Schreib uns einfach!',
+        cc_team:'Ihre Ansprechpartner', cc_address:'Adresse', cc_phone:'Telefon', cc_email:'E-Mail',
+        cc_hours:'Öffnungszeiten', cc_hours_val:'Täglich: 07:00 – 22:30 Uhr',
+        form_title:'Nachricht senden', form_fname:'Vorname', form_fname_ph:'Max',
+        form_lname:'Nachname', form_lname_ph:'Mustermann',
+        form_email:'E-Mail', form_email_ph:'max@email.de',
+        form_subject:'Betreff', form_subject_ph:'z.B. Mitgliedschaft anfragen',
+        form_msg:'Nachricht', form_msg_ph:'Deine Nachricht…', form_btn:'Nachricht senden →',
+        footer_sub:'Padel. Leidenschaft. Community.',
+        footer_copy:'© 2026 The Cube – Padelarena Wehratal. Alle Rechte vorbehalten.',
+        form_success:'✓ Nachricht gesendet!'
+      },
+      en: {
+        nav_about:'About', nav_book:'Book', nav_membership:'Membership',
+        nav_training:'Training',
+        nav_events:'Events', nav_gallery:'Gallery', nav_news:'News', nav_contact:'Contact',
+        nav_cta:'Book now →',
+        news_label:'News', news_title:'What\'s Coming Next', news_sub:'Big plans for the future of padel in the Wehratal.',
+        news_badge:'Announcement', news_headline:'New Indoor Hall Planned in Wehr',
+        news_desc:'We\'re planning to build a modern indoor padel hall in Wehr – for year-round play in any weather. More courts, more possibilities, more padel. As soon as there\'s news, you\'ll hear it here first.',
+        news_stay:'Stay in the loop – sign up and never miss an announcement.',
+        news_btn:'Notify me', news_done:'✓ Subscribed!', news_email_ph:'Your email address', news_coming:'Coming soon',
+        hero_badge:'Now open · Wehratal',
+        hero_title1:'Your Padel', hero_title2:'Experience in the Wehratal',
+        hero_desc:'Welcome to The Cube – the modern padel arena in the Wehratal. Top-quality courts, great atmosphere and a passionate community for everyone who loves padel.',
+        hero_btn_book:'🎾 Book a court', hero_btn_more:'Learn more',
+        stat_courts:'Padel Courts', stat_covered_num:'Covered', stat_covered_lbl:'Court 1 – Roofed',
+        stat_outdoor_num:'Outdoor', stat_outdoor_lbl:'Court 2 – Open Air',
+        about_label:'About The Cube', about_title:'Padel at its finest in the Wehratal',
+        about_sub:'The Cube is more than a sports facility – it\'s a meeting place for padel enthusiasts of all levels. Since 2024 we offer modern courts, professional coaching and a welcoming atmosphere.',
+        about_rating:'Rating', about_since:'Since 2024',
+        about_img_placeholder:'Insert facility photo here',
+        feat1_title:'2 top-class courts', feat1_desc:'Court 1 with a roof for weather-independent play – Court 2 as an open-air experience under the open sky.',
+        feat2_title:'Professional coaching', feat2_desc:'Courses and coaching for beginners to advanced players.',
+        feat3_title:'Vibrant community', feat3_desc:'Tournaments, mixed groups and events for all levels.',
+        feat4_title:'Easy booking via Playtomic', feat4_desc:'Reserve courts online around the clock – fast and straightforward.',
+        feat5_title:'Rackets & Balls On-Site', feat5_desc:'Don\'t have your own equipment? No problem – rackets and balls are available on-site for you.',
+        book_title:'Ready to play? Book your court now.',
+        book_sub:'Check availability and book directly via Playtomic – easy, fast, anytime.',
+        book_btn:'Book on Playtomic',
+        training_label:'Training & Coaches', training_title:'Learn from the best',
+        training_sub:'Our experienced coaching team is here for you – whether you\'re a beginner or an ambitious player.',
+        coach_photo_hint:'Insert photo here', badge_licensed:'Licensed Coach', badge_coach:'Coach', badge_top10:'Top 10 Switzerland',
+        coach_role_head:'Head Coach', coach_role_senior:'Senior Coach', coach_role_pro:'Pro Coach & Player',
+        coach_times_label:'Training times',
+        days_mow:'Mon / Wed', days_tuth:'Tue / Thu', days_fri:'Fri', days_sat:'Sat', days_sun:'Sun',
+        coach_book_note:'Please arrange training in advance with the coach.',
+        marc_desc:'Licensed DPV padel coach with many years of experience in individual and group training. Marc combines technical expertise with a motivating coaching atmosphere.',
+        marc_times:'Individual appointments by arrangement',
+        markus_desc:'Licensed DPV padel coach with years of experience in player development. Markus focuses on technique, tactics and individual improvement.',
+        nathalie_desc:'Experienced coach and active Top-10 player in the Swiss national ranking. Joshua brings elite-level understanding directly into training sessions.',
+        price_label:'Membership', price_title:'The right offer for you',
+        price_sub:'Whether you\'re a casual player or a regular – we have the perfect package for every level of enthusiasm.',
+        plan1_name:'Basic', plan1_paytype:'Pay per Play', plan1_desc:'Pay only when you play – no commitment, no annual fee.',
+        per_person:'/ person',
+        plan1_f1:'Book via Playtomic', plan1_f2:'Book 7 days in advance', plan1_f3:'No membership required', plan1_f4:'No discounts',
+        plan1_btn:'Book a court', plan_popular:'Most popular',
+        plan2_name:'Student', plan_year:'/ year', plan2_desc:'For students and juniors – play more, pay less.',
+        plan2_days:'Mon–Fri', plan_free:'Free',
+        plan2_f1:'Max. 4 hrs per day', plan2_f2:'Max. 4 active bookings at once', plan2_f3:'Book 7 days in advance',
+        plan2_btn:'Join now',
+        plan3_name:'Premium', plan_year2:'/ year', plan3_desc:'Maximum freedom – play free anytime and book earlier.',
+        plan3_always:'Anytime',
+        plan3_f1:'Max. 4 hrs per day', plan3_f2:'Max. 4 active bookings at once', plan3_f3:'14-day advance booking (exclusive)',
+        plan3_btn:'Enquire now',
+        events_label:'Events & Tournaments', events_title:'Always something happening at The Cube',
+        events_sub:'From weekly social games to official tournaments – find all events at a glance.',
+        hours_label:'Opening hours', hours_daily:'Daily', hours_cta:'Book now →',
+        ev1_tag:'🎾 Weekly', ev1_title:'Social Padel',
+        ev1_desc:'Come along, play and meet new partners! Our weekly Social Padel is open to all levels – just show up and join in.',
+        ev1_m1:'Every Friday', ev1_m3:'All levels welcome', ev1_m4:'€10 per person',
+        ev2_tag:'🏆 Tournament', ev2_title:'Mexicano Tournaments',
+        ev2_desc:'The popular Mexicano format at The Cube – an exciting round-robin tournament where you play with rotating partners and always face equally matched teams.',
+        ev2_m1:'Regular dates', ev2_m2:'Announcements to follow', ev2_m3:'Sign up via Playtomic', ev2_btn:'Sign up now →',
+        ev3_tag:'🇨🇭 Official', ev3_title:'Swiss Tennis Padel Tournaments',
+        ev3_desc:'As a licensed partner of Swiss Tennis Padel, we host official tournaments in the national calendar. Players earn official ranking points.',
+        ev3_m1:'Official ranking tournaments', ev3_m2:'Dates to be announced', ev3_m3:'All info via Swiss Tennis Padel', ev3_btn:'Register now →',
+        partner_badge:'✅ Official licensed partner', partner_title:'Swiss Tennis Padel Partner',
+        partner_desc:'The Cube – Padelarena Wehratal is an official licensed partner of Swiss Tennis Padel. We organise and host official Swiss Tennis Padel ranking tournaments, making us part of the national padel network of Switzerland.',
+        gallery_label:'Gallery', gallery_title:'A look inside The Cube', gallery_sub:'Modern facility, great atmosphere – see for yourself.',
+        gal1:'Main court', gal2:'Court 2', gal3:'Court 3', gal4:'Club lounge', gal5:'Tournament highlights',
+        contact_label:'Contact & Directions', contact_title:'We look forward to seeing you',
+        contact_sub:'Questions about membership, training or operations? Just write to us!',
+        cc_team:'Your contacts', cc_address:'Address', cc_phone:'Phone', cc_email:'Email',
+        cc_hours:'Opening hours', cc_hours_val:'Daily: 07:00 – 22:30',
+        form_title:'Send a message', form_fname:'First name', form_fname_ph:'John',
+        form_lname:'Last name', form_lname_ph:'Smith',
+        form_email:'Email', form_email_ph:'john@email.com',
+        form_subject:'Subject', form_subject_ph:'e.g. Membership enquiry',
+        form_msg:'Message', form_msg_ph:'Your message…', form_btn:'Send message →',
+        footer_sub:'Padel. Passion. Community.',
+        footer_copy:'© 2026 The Cube – Padelarena Wehratal. All rights reserved.',
+        form_success:'✓ Message sent!'
+      },
+      es: {
+        nav_about:'Nosotros', nav_book:'Reservar', nav_membership:'Membresía',
+        nav_training:'Entrenamiento',
+        nav_events:'Eventos', nav_gallery:'Galería', nav_news:'Noticias', nav_contact:'Contacto',
+        nav_cta:'Reservar →',
+        news_label:'Noticias', news_title:'Lo que viene', news_sub:'Grandes planes para el futuro del pádel en el Wehratal.',
+        news_badge:'Anuncio', news_headline:'Nueva pista cubierta planeada en Wehr',
+        news_desc:'Estamos planeando construir una moderna pista de pádel cubierta en Wehr – para jugar todo el año sin importar el clima. Más canchas, más posibilidades, más pádel. En cuanto haya novedades, te enterarás aquí primero.',
+        news_stay:'Mantente al día – regístrate y no te pierdas ningún anuncio.',
+        news_btn:'Notificarme', news_done:'✓ ¡Suscrito!', news_email_ph:'Tu correo electrónico', news_coming:'Próximamente',
+        hero_badge:'Abierto ahora · Wehratal',
+        hero_title1:'Tu Pádel', hero_title2:'en el Wehratal',
+        hero_desc:'Bienvenido a The Cube – la moderna padelarena del Wehratal. Canchas de primera calidad, gran ambiente y una comunidad apasionada para todos los que aman el pádel.',
+        hero_btn_book:'🎾 Reservar cancha', hero_btn_more:'Más información',
+        stat_courts:'Canchas', stat_covered_num:'Cubierta', stat_covered_lbl:'Cancha 1 – Con techo',
+        stat_outdoor_num:'Exterior', stat_outdoor_lbl:'Cancha 2 – Aire libre',
+        about_label:'Sobre The Cube', about_title:'Pádel al máximo nivel en el Wehratal',
+        about_sub:'The Cube es más que una instalación deportiva – es un punto de encuentro para entusiastas del pádel de todos los niveles. Desde 2024 ofrecemos canchas modernas, entrenamiento profesional y un ambiente acogedor.',
+        about_rating:'Valoración', about_since:'Desde 2024',
+        about_img_placeholder:'Insertar foto de la instalación aquí',
+        feat1_title:'2 canchas de primera clase', feat1_desc:'Cancha 1 con techo para jugar sin importar el clima – Cancha 2 como experiencia al aire libre.',
+        feat2_title:'Entrenamiento profesional', feat2_desc:'Cursos y coaching para principiantes hasta avanzados.',
+        feat3_title:'Comunidad activa', feat3_desc:'Torneos, grupos mixtos y eventos para todos los niveles.',
+        feat4_title:'Reserva fácil vía Playtomic', feat4_desc:'Reserva canchas en línea las 24 horas – rápido y sencillo.',
+        feat5_title:'Raquetas y pelotas en el lugar', feat5_desc:'¿No tienes tu propio equipo? No hay problema – raquetas y pelotas están disponibles en el lugar para ti.',
+        book_title:'¿Listo para jugar? Reserva tu cancha ahora.',
+        book_sub:'Consulta disponibilidad y reserva directamente en Playtomic – fácil, rápido, en cualquier momento.',
+        book_btn:'Reservar en Playtomic',
+        training_label:'Entrenamiento & Coaches', training_title:'Aprende de los mejores',
+        training_sub:'Nuestro equipo de entrenadores con experiencia te acompaña – ya seas principiante o jugador ambicioso.',
+        coach_photo_hint:'Insertar foto aquí', badge_licensed:'Entrenador Licenciado', badge_coach:'Entrenador', badge_top10:'Top 10 Suiza',
+        coach_role_head:'Entrenador Principal', coach_role_senior:'Entrenador Senior', coach_role_pro:'Entrenador Pro & Jugador',
+        coach_times_label:'Horarios de entrenamiento',
+        days_mow:'Lu / Mi', days_tuth:'Ma / Ju', days_fri:'Vi', days_sat:'Sá', days_sun:'Do',
+        coach_book_note:'Por favor, acuerda el entrenamiento con antelación con el entrenador.',
+        marc_desc:'Entrenador de pádel certificado por DPV con amplia experiencia en entrenamiento individual y grupal. Marc combina conocimiento técnico con un ambiente motivador.',
+        marc_times:'Citas individuales previa consulta',
+        markus_desc:'Entrenador de pádel certificado por DPV con años de experiencia en el desarrollo de jugadores. Markus se centra en técnica, táctica y mejora individual.',
+        nathalie_desc:'Entrenador experimentado y jugador activo en el Top 10 del ranking nacional suizo. Joshua aporta comprensión de élite directamente a las sesiones de entrenamiento.',
+        price_label:'Membresía', price_title:'La oferta perfecta para ti',
+        price_sub:'Ya seas jugador ocasional o asiduo – tenemos el paquete ideal para cada nivel de entusiasmo.',
+        plan1_name:'Básico', plan1_paytype:'Pay per Play', plan1_desc:'Paga solo cuando juegas – sin compromiso, sin cuota anual.',
+        per_person:'/ persona',
+        plan1_f1:'Reserva vía Playtomic', plan1_f2:'Reserva con 7 días de antelación', plan1_f3:'Sin membresía necesaria', plan1_f4:'Sin descuentos',
+        plan1_btn:'Reservar cancha', plan_popular:'Más popular',
+        plan2_name:'Estudiante', plan_year:'/ año', plan2_desc:'Para estudiantes y jóvenes – juega más, paga menos.',
+        plan2_days:'Lu–Vi', plan_free:'Gratis',
+        plan2_f1:'Máx. 4 horas por día', plan2_f2:'Máx. 4 reservas activas a la vez', plan2_f3:'Reserva con 7 días de antelación',
+        plan2_btn:'Unirse',
+        plan3_name:'Premium', plan_year2:'/ año', plan3_desc:'Máxima libertad – juega gratis siempre y reserva antes.',
+        plan3_always:'Siempre',
+        plan3_f1:'Máx. 4 horas por día', plan3_f2:'Máx. 4 reservas activas a la vez', plan3_f3:'14 días de antelación (exclusivo)',
+        plan3_btn:'Consultar ahora',
+        events_label:'Eventos y Torneos', events_title:'Siempre algo en The Cube',
+        events_sub:'Desde partidas sociales semanales hasta torneos oficiales – encuentra todos los eventos de un vistazo.',
+        hours_label:'Horario', hours_daily:'Diariamente', hours_cta:'Reservar →',
+        ev1_tag:'🎾 Semanal', ev1_title:'Pádel Social',
+        ev1_desc:'¡Ven, juega y conoce nuevos compañeros! Nuestro Pádel Social semanal está abierto a todos los niveles – solo preséntate y únete.',
+        ev1_m1:'Todos los viernes', ev1_m3:'Todos los niveles bienvenidos', ev1_m4:'10 € por persona',
+        ev2_tag:'🏆 Torneo', ev2_title:'Torneos Mexicano',
+        ev2_desc:'El popular formato Mexicano en The Cube – un emocionante torneo rotativo donde juegas con parejas cambiantes y siempre te enfrentas a equipos de nivel similar.',
+        ev2_m1:'Fechas regulares', ev2_m2:'Próximos anuncios', ev2_m3:'Inscripción vía Playtomic', ev2_btn:'Inscribirse ahora →',
+        ev3_tag:'🇨🇭 Oficial', ev3_title:'Torneos Swiss Tennis Padel',
+        ev3_desc:'Como socio licenciado de Swiss Tennis Padel, organizamos torneos oficiales en el calendario nacional. Los jugadores obtienen puntos de clasificación oficiales.',
+        ev3_m1:'Torneos de clasificación oficial', ev3_m2:'Fechas por confirmar', ev3_m3:'Toda la info vía Swiss Tennis Padel', ev3_btn:'Registrarse ahora →',
+        partner_badge:'✅ Socio oficial licenciado', partner_title:'Socio Swiss Tennis Padel',
+        partner_desc:'The Cube – Padelarena Wehratal es socio oficial licenciado de Swiss Tennis Padel. Organizamos y celebramos torneos oficiales de clasificación de Swiss Tennis Padel, siendo parte de la red nacional de pádel de Suiza.',
+        gallery_label:'Galería', gallery_title:'Una mirada al interior de The Cube', gallery_sub:'Instalaciones modernas, gran ambiente – compruébalo tú mismo.',
+        gal1:'Cancha principal', gal2:'Cancha 2', gal3:'Cancha 3', gal4:'Lounge del club', gal5:'Momentos del torneo',
+        contact_label:'Contacto & Cómo llegar', contact_title:'Te esperamos con los brazos abiertos',
+        contact_sub:'¿Preguntas sobre membresía, entrenamiento o el club? ¡Escríbenos!',
+        cc_team:'Tus contactos', cc_address:'Dirección', cc_phone:'Teléfono', cc_email:'Correo electrónico',
+        cc_hours:'Horario de apertura', cc_hours_val:'Diariamente: 07:00 – 22:30',
+        form_title:'Enviar un mensaje', form_fname:'Nombre', form_fname_ph:'Juan',
+        form_lname:'Apellido', form_lname_ph:'García',
+        form_email:'Correo electrónico', form_email_ph:'juan@email.com',
+        form_subject:'Asunto', form_subject_ph:'Ej. Consulta de membresía',
+        form_msg:'Mensaje', form_msg_ph:'Tu mensaje…', form_btn:'Enviar mensaje →',
+        footer_sub:'Pádel. Pasión. Comunidad.',
+        footer_copy:'© 2026 The Cube – Padelarena Wehratal. Todos los derechos reservados.',
+        form_success:'✓ ¡Mensaje enviado!'
+      }
+    };
+
+    let currentLang = 'de';
+
+    function setLang(lang) {
+      currentLang = lang;
+      const t = translations[lang];
+
+      // Update all data-i18n elements
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.textContent = t[key];
+      });
+
+      // Update placeholders
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (t[key] !== undefined) el.placeholder = t[key];
+      });
+
+      // Update html lang attribute
+      document.documentElement.lang = lang;
+
+      // Update active button
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+      });
+    }
+
+    /* ── IMPRESSUM ── */
+    /* ── MOBILE MENU ── */
+    const hamburger = document.querySelector('.nav-hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', function() {
+      this.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+    function closeMobile() {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function openImpressum() {
+      document.getElementById('impressumOverlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeImpressum() {
+      document.getElementById('impressumOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && document.getElementById('impressumOverlay').classList.contains('active')) closeImpressum();
+    });
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.btn-submit');
+      const t = translations[currentLang];
+      btn.textContent = t.form_success;
+      btn.style.background = '#5cd8f4';
+      setTimeout(() => {
+        btn.textContent = t.form_btn;
+        btn.style.background = '';
+        e.target.reset();
+      }, 3000);
+    }
+
+    window.addEventListener('scroll', () => {
+      document.querySelector('nav').style.boxShadow =
+        window.scrollY > 30 ? '0 4px 32px rgba(0,0,0,0.5)' : 'none';
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+
+    /* ── LIGHTBOX ── */
+    const galleryImages = ['photo1.jpg', 'photo3.jpg', 'photo4.jpg'];
+    let currentIndex = 0;
+
+    function openLightbox(index) {
+      currentIndex = index;
+      document.getElementById('lightbox-img').src = galleryImages[currentIndex];
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox(e) {
+      if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close')) return;
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function shiftLightbox(dir, e) {
+      e.stopPropagation();
+      currentIndex = (currentIndex + dir + galleryImages.length) % galleryImages.length;
+      document.getElementById('lightbox-img').src = galleryImages[currentIndex];
+    }
+
+    document.addEventListener('keydown', e => {
+      const lb = document.getElementById('lightbox');
+      if (!lb.classList.contains('active')) return;
+      if (e.key === 'Escape') { lb.classList.remove('active'); document.body.style.overflow = ''; }
+      if (e.key === 'ArrowRight') shiftLightbox(1, { stopPropagation: () => {} });
+      if (e.key === 'ArrowLeft') shiftLightbox(-1, { stopPropagation: () => {} });
+    });
+
+    /* ═══════════════════════════════════════
+       PADEL BALL → LOGO ANIMATION
+    ═══════════════════════════════════════ */
+    (function() {
+      const canvas = document.getElementById('ballCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const logo = document.getElementById('ballLogo');
+      const replayBtn = document.getElementById('replayBtn');
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = 420 * dpr;
+      canvas.height = 420 * dpr;
+      ctx.scale(dpr, dpr);
+      const W = 420, H = 420, cx = W / 2, cy = H / 2;
+
+      let ball, particles, splashed, phase, bounceCount, frame, trail, animId;
+      const maxFrames = 170;
+
+      function resetState() {
+        ball = { x: -60, y: -40, r: 28, vx: 6.5, vy: 5, opacity: 1, scale: 1 };
+        particles = [];
+        splashed = false;
+        phase = 'fly';
+        bounceCount = 0;
+        frame = 0;
+        trail = [];
+        if (animId) cancelAnimationFrame(animId);
+        animId = null;
+        ctx.clearRect(0, 0, W, H);
+        // Reset logo
+        logo.classList.remove('reveal');
+        logo.style.opacity = '0';
+        logo.style.transform = 'translate(-50%, -50%) scale(0)';
+        // Hide replay button
+        replayBtn.classList.remove('visible');
+        // Show canvas
+        canvas.style.opacity = '1';
+      }
+
+      function showReplayBtn() {
+        replayBtn.classList.add('visible');
+      }
+
+      function drawBall() {
+        ctx.save();
+        ctx.globalAlpha = ball.opacity;
+        ctx.translate(ball.x, ball.y);
+        ctx.scale(ball.scale, ball.scale);
+
+        const glow = ctx.createRadialGradient(0, 0, ball.r * 0.3, 0, 0, ball.r * 2.5);
+        glow.addColorStop(0, 'rgba(210,230,50,0.3)');
+        glow.addColorStop(1, 'rgba(210,230,50,0)');
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(0, 0, ball.r * 2.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        const grad = ctx.createRadialGradient(-5, -6, 2, 0, 0, ball.r);
+        grad.addColorStop(0, '#e8f54a');
+        grad.addColorStop(0.35, '#d5e636');
+        grad.addColorStop(0.7, '#b8cc20');
+        grad.addColorStop(1, '#8aa00e');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(0, 0, ball.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = 'rgba(255,255,255,0.06)';
+        for (let i = 0; i < 30; i++) {
+          const a = i * 2.1 + frame * 0.01;
+          const d = (i * 7.3) % (ball.r * 0.9);
+          ctx.beginPath();
+          ctx.arc(Math.cos(a) * d, Math.sin(a) * d, 1.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        ctx.strokeStyle = 'rgba(255,255,255,0.55)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, ball.r * 0.75, ball.r * 0.35, -0.3, -2.4, 2.4);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.ellipse(0, 0, ball.r * 0.35, ball.r * 0.75, -0.3, -2.4, 2.4);
+        ctx.stroke();
+
+        ctx.fillStyle = 'rgba(255,255,255,0.45)';
+        ctx.beginPath();
+        ctx.ellipse(-7, -8, 7, 4, -0.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        const shadow = ctx.createRadialGradient(3, 5, ball.r * 0.4, 3, 5, ball.r);
+        shadow.addColorStop(0, 'rgba(0,0,0,0)');
+        shadow.addColorStop(1, 'rgba(0,0,0,0.2)');
+        ctx.fillStyle = shadow;
+        ctx.beginPath();
+        ctx.arc(0, 0, ball.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+      }
+
+      function spawnSplash() {
+        for (let i = 0; i < 40; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 2 + Math.random() * 7;
+          const size = 2 + Math.random() * 5;
+          particles.push({
+            x: ball.x, y: ball.y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            r: size, life: 1,
+            decay: 0.015 + Math.random() * 0.025,
+            color: Math.random() > 0.5 ? '#d5e636' : '#e8f54a'
+          });
+        }
+        particles.push({
+          x: ball.x, y: ball.y, vx: 0, vy: 0,
+          r: 10, life: 1, decay: 0.03,
+          ring: true, color: '#d5e636'
+        });
+      }
+
+      function drawParticles() {
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= 0.97;
+          p.vy *= 0.97;
+          p.life -= p.decay;
+          if (p.life <= 0) { particles.splice(i, 1); continue; }
+
+          ctx.save();
+          ctx.globalAlpha = p.life * 0.8;
+          if (p.ring) {
+            p.r += 4;
+            ctx.strokeStyle = p.color;
+            ctx.lineWidth = 2 * p.life;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.stroke();
+          } else {
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r * p.life, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+      }
+
+      function drawTrail() {
+        for (let i = trail.length - 1; i >= 0; i--) {
+          trail[i].life -= 0.04;
+          if (trail[i].life <= 0) { trail.splice(i, 1); continue; }
+          ctx.save();
+          ctx.globalAlpha = trail[i].life * 0.3;
+          ctx.fillStyle = '#d5e636';
+          ctx.beginPath();
+          ctx.arc(trail[i].x, trail[i].y, trail[i].r, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, W, H);
+        frame++;
+
+        if (phase === 'fly' || phase === 'bounce') {
+          if (frame % 2 === 0) {
+            trail.push({ x: ball.x, y: ball.y, r: ball.r * 0.4, life: 1 });
+          }
+          drawTrail();
+
+          ball.x += ball.vx;
+          ball.y += ball.vy;
+          ball.vy += 0.18;
+
+          if (ball.x > W - ball.r) { ball.x = W - ball.r; ball.vx *= -0.7; bounceCount++; }
+          if (ball.x < ball.r) { ball.x = ball.r; ball.vx *= -0.7; bounceCount++; }
+          if (ball.y > H - ball.r) {
+            ball.y = H - ball.r; ball.vy *= -0.65; bounceCount++;
+            for (let i = 0; i < 6; i++) {
+              particles.push({
+                x: ball.x, y: ball.y,
+                vx: (Math.random() - 0.5) * 4,
+                vy: -Math.random() * 3,
+                r: 2 + Math.random() * 2, life: 1,
+                decay: 0.04, color: '#d5e636'
+              });
+            }
+          }
+          if (ball.y < ball.r) { ball.y = ball.r; ball.vy *= -0.6; }
+
+          if (frame > 80) {
+            const dx = cx - ball.x, dy = cy - ball.y;
+            ball.vx += dx * 0.008;
+            ball.vy += dy * 0.008;
+          }
+
+          if (frame > 100 && Math.abs(ball.x - cx) < 40 && Math.abs(ball.y - cy) < 40) {
+            phase = 'splash';
+            ball.x = cx; ball.y = cy;
+            spawnSplash();
+          }
+
+          drawParticles();
+          drawBall();
+        }
+
+        else if (phase === 'splash') {
+          drawTrail();
+          ball.scale *= 0.92;
+          ball.opacity *= 0.9;
+          drawParticles();
+          if (ball.opacity > 0.03) drawBall();
+          if (particles.length === 0 && ball.opacity < 0.03) {
+            phase = 'fadeOut';
+            // Trigger logo reveal
+            logo.style.opacity = '';
+            logo.style.transform = '';
+            logo.classList.add('reveal');
+            // Show replay button after logo finishes
+            setTimeout(showReplayBtn, 900);
+            return;
+          }
+        }
+
+        else if (phase === 'fadeOut') {
+          return;
+        }
+
+        if (frame < maxFrames) {
+          animId = requestAnimationFrame(animate);
+        }
+      }
+
+      function startAnimation() {
+        resetState();
+        setTimeout(() => { animId = requestAnimationFrame(animate); }, 400);
+      }
+
+      // Replay button click
+      replayBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        startAnimation();
+      });
+
+      // Initial play
+      startAnimation();
+    })();
+  </script>
+</body>
+</html>
